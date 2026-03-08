@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","839","random success/error","chromium","Sun Mar 08 17:23:15 UTC 2026","passed","Sun Mar 08 17:23:16 UTC 2026","Test describe","contact-form.spec.ts","",""
+"","824","always success","chromium","Sun Mar 08 17:23:16 UTC 2026","passed","Sun Mar 08 17:23:16 UTC 2026","Test describe","contact-form.spec.ts","",""
+"","5790","always error","chromium","Sun Mar 08 17:23:16 UTC 2026","failed","Sun Mar 08 17:23:21 UTC 2026","Test describe","contact-form.spec.ts","",""
