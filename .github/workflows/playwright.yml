@@ -42,6 +42,14 @@ jobs:
           name: allure-results
           path: allure-results
 
+      - name: Setup Allure History
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.13
         id: allure-report
