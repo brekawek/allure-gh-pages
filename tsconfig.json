@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noEmit": true,
+    "types": ["node", "@playwright/test"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "tests",
+    "fixtures",
+    "page-object-models",
+    "test-data",
+    "types",
+    "playwright.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+  ]
+}

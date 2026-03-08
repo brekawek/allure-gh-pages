@@ -1,0 +1,66 @@
+name: Playwright Tests
+on:
+ workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  test:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install chromium --with-deps --only-shell
+    - name: Run Playwright tests
+      run: npm run test
+    - name: Upload allure results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: allure-results
+        retention-days: 1
+
+  report:
+     if: always()
+     needs: test
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v4
+
+      - name: Download allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.13
+        id: allure-report
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 20 
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+      - name: Add summary
+        if: always()
+        run: |
+          echo "# 📊 Test report summary" >> $GITHUB_STEP_SUMMARY
+          echo "The Allure report has been generated and is being published. It will be available in a few minutes." >> $GITHUB_STEP_SUMMARY
+          echo "[View Full Allure Report](https://brekawek.github.io/allure-gh-pages/)" >> $GITHUB_STEP_SUMMARY
